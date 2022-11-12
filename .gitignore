@@ -1,3 +1,14 @@
+# Executables with no extension
+*
+!*.*
+!*/
+!Makefile
+
+# Debug files
+*.out
+*.log
+*.data
+
 # Prerequisites
 *.d
 
