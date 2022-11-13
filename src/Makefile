@@ -22,6 +22,8 @@ endif
 
 CPPFLAGS = -std=c++17 -Wall -Wextra -Werror $(INTN) $(INTE) $(INTN2)
 
+INCLUDE_PATH = -I../parlaylib/include/
+
 ifdef CILKPLUS
 CPPFLAGS += -DPARLAY_CILKPLUS -DCILK -fcilkplus
 else ifdef OPENCILK
@@ -46,10 +48,10 @@ endif
 all: FAST_BCC hopcroft_tarjan
 
 FAST_BCC: BCC.h BCC.cpp spanning_forest.h connectivity.h sparse_table.h LDD.h graph.h
-	$(CC) $(CPPFLAGS) BCC.cpp -o FAST_BCC
+	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) BCC.cpp -o FAST_BCC
 
 hopcroft_tarjan: hopcroft_tarjan.cpp hopcroft_tarjan.h graph.h
-	$(CC) $(CPPFLAGS) hopcroft_tarjan.cpp -o hopcroft_tarjan
+	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) hopcroft_tarjan.cpp -o hopcroft_tarjan
 
 clean:
 	rm -f FAST_BCC hopcroft_tarjan

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <fcntl.h>
-#include <malloc.h>
 #include <parlay/parallel.h>
 #include <parlay/primitives.h>
 #include <parlay/random.h>
