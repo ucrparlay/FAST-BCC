@@ -46,7 +46,7 @@ The application can auto-detect the format of the input graph based on the suffi
     + $n$ - number of vertices (64-bit variable)
     + $m$ - number of edges (64-bit variable)
     + sizes - sizes of this file in bytes, which is equals to $3\times8+(n+1)\times8+m\times4$ (64-bit variable)
-    + offset[] - offset[$i$] (inclusive) and offset[$i+1$] (exclusive) represents the range of neighbors list of the $i$-th vertex in the edges array(64-bit array of length $n+1$)
+    + offset[] - offset[ $i$ ] (inclusive) and offset[ $i+1$ ] (exclusive) represents the range of neighbors list of the $i$-th vertex in the edges array (64-bit array of length $n+1$)
     + edges[] - edges list (32-bit array of length $m$) 
 + `.adj` The adjacency graph format from [Problem Based Benchmark suite](http://www.cs.cmu.edu/~pbbs/benchmarks/graphIO.html). 
 
