@@ -22,9 +22,9 @@ Compilation can be done by using the Makefile in the src/ directory
 cd src/
 make
 ```
-The make command compiles the executable for both FAST-BCC and Hopcroft-Tarjan. It compiles using g++ by default. To compiler with clang, run:
+The make command compiles the executable for both FAST-BCC and Hopcroft-Tarjan. It compiles using clang by default. To compiler with g++, run:
 ```
-make CLANG=1
+make GCC=1
 ```
 To run our code on graphs with more than $2^{31}-1$ vertices (e.g., hyperlink2012), an extra flag `N2LONG` needs to be passed in the compilation stage. That is 
 ```
