@@ -8,6 +8,9 @@
 *.out
 *.log
 *.data
+*.sh
+*.dat
+*.swp
 
 # Prerequisites
 *.d
