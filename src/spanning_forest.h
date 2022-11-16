@@ -9,7 +9,7 @@ Forest spanning_forest(
   sequence<pair<NodeId, NodeId>> tree_edges;
   internal::timer t_conn;
   tie(label, tree_edges) = connect(G, beta, pred, true);
-  t_conn.next("Connectivity");
+  // t_conn.next("Connectivity");
 
   auto label_edge = tabulate(tree_edges.size(), [&](size_t i) {
     return make_tuple(label[tree_edges[i].first], tree_edges[i].first,

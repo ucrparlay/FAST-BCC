@@ -15,28 +15,35 @@ int main(int argc, char* argv[]) {
   if (argc == 3) {
     NUM_ROUNDS = atoi(argv[2]);
   }
+  ofstream ofs("VL_bcc.dat", ios_base::app);
+  ofs << filename << '\t';
+  ofs.close();
   internal::timer t_g;
   Graph g = read_graph(filename);
-  fprintf(stderr, "Graph read: %f\n", t_g.total_time());
-  ofstream ofs("VL_bcc.dat", ios_base::app);
+  printf("Graph read: %f\n", t_g.total_time());
+  double total_time = 0;
   for (int i = 0; i <= NUM_ROUNDS; i++) {
     if (i == 0) {
       BCC solver(g);
       internal::timer t_critical;
       solver.biconnectivity();
-      // auto label = solver.biconnectivity();
       t_critical.stop();
-      printf("Vertex-Labeling: %f\n", t_critical.total_time());
-      // solver.get_num_bcc(label);
+      printf("Warmup round: %f\n", t_critical.total_time());
     } else {
       BCC solver(g);
       internal::timer t_critical;
       solver.biconnectivity();
       t_critical.stop();
-      printf("Vertex-Labeling: %f\n", t_critical.total_time());
-      ofs << t_critical.total_time() << '\n';
+      printf("Round %d: %f\n", i, t_critical.total_time());
+      total_time += t_critical.total_time();
     }
   }
+  BCC solver(g);
+  auto label = solver.biconnectivity();
+  solver.get_num_bcc(label);
+  printf("Average time: %f\n", total_time / NUM_ROUNDS);
+  ofs.open("VL_bcc.dat", ios_base::app);
+  ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
   // if (true) {
   // BCC solver(g);

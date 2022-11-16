@@ -57,7 +57,7 @@ struct BCC {
     // m * 2, [&](NodeId2 i) { return make_pair(edgelist[i].first, i); });
     // auto delayed_perms = delayed_seq<pair<NodeId2, NodeId2>>(
     // m * 2, [&](NodeId2 i) { return make_pair(edgelist[i].first, i); });
-    t_ett.next("initialization");
+    // t_ett.next("initialization");
     integer_sort_inplace(make_slice(perms), [](const pair<NodeId, NodeId2> &a) {
       return a.first;
     });
@@ -68,7 +68,7 @@ struct BCC {
     // auto perms = integer_sort(delayed_perms,
     //[](pair<NodeId2, NodeId2> a) { return a.first; });
     // printf("Sorting time: %f\n", t_sort.total_time());
-    t_ett.next("sorting");
+    // t_ett.next("sorting");
 
     auto first_edge = sequence<NodeId2>::uninitialized(G.n);
     parallel_for(0, m * 2, [&](size_t i) {
@@ -84,7 +84,7 @@ struct BCC {
         link[perms[i].second ^ 1] = first_edge[perms[i].first];
       }
     });
-    t_ett.next("linking");
+    // t_ett.next("linking");
     // printf("Linking time: %f\n", t_linking.total_time());
 
     auto samples_offset = sequence<NodeId2>::uninitialized(num_trees + 1);
@@ -118,7 +118,7 @@ struct BCC {
         idx[samples[j]] = j;
       }
     });
-    t_ett.next("sampling");
+    // t_ett.next("sampling");
 
     internal::timer t_ranking;
     parallel_for(0, num_trees, [&](size_t i) {
@@ -172,7 +172,7 @@ struct BCC {
         order[sizes[i + 1] - 1] = F.vertex[F.offset[i]];
       }
     });
-    t_ett.next("ranking");
+    // t_ett.next("ranking");
   }
   void compute() {
     internal::timer t;
@@ -238,11 +238,11 @@ struct BCC {
   auto biconnectivity() {
     internal::timer t;
     F = spanning_forest(G, beta);
-    t.next("spanning_forest");
+    // t.next("spanning_forest");
     euler_tour_tree();
-    t.next("euler_tour_tree");
+    // t.next("euler_tour_tree");
     compute();
-    t.next("compute");
+    // t.next("compute");
     auto critical = [&](NodeId u, NodeId v) {
       if (first[u] <= low[v] && last[u] >= high[v]) {
         return true;
@@ -269,7 +269,7 @@ struct BCC {
       return false;
     };
     auto label = get<0>(connect(G, beta, pred));
-    t.next("connectivity");
+    // t.next("connectivity");
     get_component_head(label);
     return label;
   }
@@ -283,7 +283,7 @@ struct BCC {
         component_head[label[i]] = p;
       }
     });
-    t.next("component_head");
+    // t.next("component_head");
     // auto label_vertex =
     // tabulate(n, [&](NodeId i) { return make_pair(label[i], i); });
     // integer_sort_inplace(make_slice(label_vertex),
@@ -355,8 +355,7 @@ struct BCC {
     auto unique_cc_label = remove_duplicates_ordered(cc_label, less<NodeId>());
     auto unique_bcc_label = remove_duplicates_ordered(label, less<NodeId>());
     ofstream ofs("VL_bcc.dat", ios_base::app);
-    ofs << "#CC: " << unique_cc_label.size() << '\n';
-    ofs << "#BCC: " << unique_bcc_label.size() - unique_cc_label.size() << '\n';
+    ofs << unique_cc_label.size() << '\t' << unique_bcc_label.size() << '\t';
     ofs.close();
     printf("#CC: %zu\n", unique_cc_label.size());
     printf("#BCC: %zu\n", unique_bcc_label.size() - unique_cc_label.size());
