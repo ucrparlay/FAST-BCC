@@ -1,8 +1,8 @@
 #pragma once
-#include <parlay/monoid.h>
-#include <parlay/parallel.h>
-#include <parlay/primitives.h>
-#include <parlay/sequence.h>
+#include "parlay/monoid.h"
+#include "parlay/parallel.h"
+#include "parlay/primitives.h"
+#include "parlay/sequence.h"
 
 using namespace std;
 using namespace parlay;

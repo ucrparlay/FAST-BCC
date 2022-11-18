@@ -1,6 +1,6 @@
 #include "hopcroft_tarjan.h"
 
-#include <parlay/internal/get_time.h>
+#include "parlay/internal/get_time.h"
 
 #include <iostream>
 

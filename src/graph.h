@@ -1,10 +1,10 @@
 #pragma once
 
 #include <fcntl.h>
-#include <parlay/parallel.h>
-#include <parlay/primitives.h>
-#include <parlay/random.h>
-#include <parlay/sequence.h>
+#include "parlay/parallel.h"
+#include "parlay/primitives.h"
+#include "parlay/random.h"
+#include "parlay/sequence.h"
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
