@@ -38,10 +38,10 @@ int main(int argc, char* argv[]) {
       total_time += t_critical.total_time();
     }
   }
+  printf("Average time: %f\n", total_time / NUM_ROUNDS);
   BCC solver(g);
   auto label = solver.biconnectivity();
   solver.get_num_bcc(label);
-  printf("Average time: %f\n", total_time / NUM_ROUNDS);
   ofs.open("VL_bcc.dat", ios_base::app);
   ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
