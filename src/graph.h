@@ -131,7 +131,7 @@ Graph read_pbbs(const char* const filename) {
   return graph;
 }
 
-Graph read_binary(const char* const filename, bool enable_mmap = true) {
+Graph read_binary(const char* const filename, bool enable_mmap = false) {
   Graph graph;
   if (enable_mmap) {
     struct stat sb;
@@ -181,14 +181,12 @@ Graph read_binary(const char* const filename, bool enable_mmap = true) {
 
     graph.n = n;
     graph.m = m;
-    sequence<uint64_t> offset(n + 1);
-    sequence<uint32_t> edge(m);
-    ifs.read(reinterpret_cast<char*>(offset.begin()), (n + 1) * 8);
-    ifs.read(reinterpret_cast<char*>(edge.begin()), m * 4);
     graph.offset = sequence<EdgeId>(n + 1);
     graph.E = sequence<NodeId>(m);
-    parallel_for(0, n + 1, [&](size_t i) { graph.offset[i] = offset[i]; });
-    parallel_for(0, m, [&](size_t i) { graph.E[i] = edge[i]; });
+    assert(sizeof(EdgeId) == sizeof(uint64_t));
+    assert(sizeof(NodeId) == sizeof(uint32_t));
+    ifs.read(reinterpret_cast<char*>(graph.offset.begin()), sizeof(EdgeId) * (n + 1));
+    ifs.read(reinterpret_cast<char*>(graph.E.begin()), sizeof(NodeId) * m);
     if (ifs.peek() != EOF) {
       cerr << "Error: Bad data\n";
       abort();
@@ -269,7 +267,7 @@ Graph generate_synthetic_cycle(size_t n) {
   return graph;
 }
 
-Graph read_graph(char* filename, bool enable_mmap = true,
+Graph read_graph(char* filename, bool enable_mmap = false,
                  bool symmetric = false) {
   if (strcmp(filename, "synthetic") == 0) {
     size_t n = 3563602789, k = 63;
