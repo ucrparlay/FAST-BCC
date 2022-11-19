@@ -49,19 +49,19 @@ cd ../src
 echo "graph,#CC,#BCC,time" > fast-bcc.csv
 
 make clean
-make FAST_BCC
+make FAST_BCC SERIAL=1
 for graph in "${undir_graph[@]}"; do
   echo ${graph_path}${graph}
   ${numactl} ./FAST_BCC ${graph_path}${graph} 10 
 done
 
 make clean
-make FAST_BCC N2LONG=1 STDALLOC=1
+make FAST_BCC N2LONG=1 STDALLOC=1 SERIAL=1
 for graph in "${undir_graph2[@]}"; do
   echo ${graph_path}${graph}
   ${numactl} ./FAST_BCC ${graph_path}${graph} 10
 done
 
-mv fast-bcc.csv ../result/
+mv fast-bcc.csv ../result/fast-bcc-seq.csv
 
 cd ../scripts
