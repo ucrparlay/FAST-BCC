@@ -3,7 +3,8 @@ This repository contains code for our paper "Provably Fast and Space-Efficient P
 
 Prerequisite
 --------
-+ g++ or clang with C++17 features support (Tested with g++ 7.5.0 and clang 14.0.6) 
++ g++ or clang with C++17 features support (Tested with g++ 7.5.0 and clang 14.0.6) on Linux machines.
++ We use [ParlayLib](https://github.com/cmuparlay/parlaylib) to support fork-join parallelism and some parallel primitives. It is provided as a submodule in our repository. 
 
 Getting Code
 --------
