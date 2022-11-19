@@ -37,17 +37,6 @@ struct Tarjan {
               break;
             }
           }
-          // cnt++;
-          // if (u != root || (u == root && cnt >= 2)) {
-          // articulation_point.insert(u);
-          //}
-          // if (low[v] > dfn[u]) {
-          // if (u < v) {
-          // bridge.insert({u, v});
-          //} else {
-          // bridge.insert({v, u});
-          //}
-          //}
         }
       } else if (v != f) {
         low[u] = min(low[u], dfn[v]);
