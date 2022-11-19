@@ -355,7 +355,8 @@ struct BCC {
     auto unique_cc_label = remove_duplicates_ordered(cc_label, less<NodeId>());
     auto unique_bcc_label = remove_duplicates_ordered(label, less<NodeId>());
     ofstream ofs("fast-bcc.csv", ios_base::app);
-    ofs << unique_cc_label.size() << ',' << unique_bcc_label.size() << ',';
+    ofs << unique_cc_label.size() << ','
+        << unique_bcc_label.size() - unique_cc_label.size() << ',';
     ofs.close();
     printf("#CC: %zu\n", unique_cc_label.size());
     printf("#BCC: %zu\n", unique_bcc_label.size() - unique_cc_label.size());
