@@ -27,6 +27,10 @@ To run our code on graphs with more than $2^{31}-1$ vertices (e.g., hyperlink201
 ```
 make N2LONG=1 STDALLOC=1 
 ```
+To compile our code to run in sequential, use: 
+```
+make SERIAL=1 
+```
 
 Running Code
 --------
