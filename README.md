@@ -25,7 +25,7 @@ make GCC=1
 ```
 To run our code on graphs with more than $2^{31}-1$ vertices (e.g., hyperlink2012), an extra flag `N2LONG` needs to be passed in the compilation stage. That is 
 ```
-make N2LONG=1
+make N2LONG=1 STDALLOC=1 
 ```
 
 Running Code
