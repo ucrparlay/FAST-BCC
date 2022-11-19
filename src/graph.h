@@ -288,8 +288,7 @@ Graph generate_synthetic_cycle(size_t n) {
   return graph;
 }
 
-Graph read_graph(char* filename, bool enable_mmap = false,
-                 bool symmetric = false) {
+Graph read_graph(char* filename, bool enable_mmap = false) {
   if (strcmp(filename, "synthetic") == 0) {
     size_t n = 3563602789, k = 63;
     return generate_synthetic_graph(n, k);
@@ -298,8 +297,6 @@ Graph read_graph(char* filename, bool enable_mmap = false,
     size_t n = 1e9;
     return generate_synthetic_cycle(n);
   }
-  // cout << "enable_mmap " << enable_mmap << endl;
-  // cout << "symmetric " << symmetric << endl;
   string str_filename = string(filename);
   size_t idx = str_filename.find_last_of('.');
   if (idx == string::npos) {
@@ -314,17 +311,6 @@ Graph read_graph(char* filename, bool enable_mmap = false,
     graph = read_binary(filename, enable_mmap);
   } else {
     cerr << "Error: Invalid graph extension\n";
-  }
-  if (str_filename.find("sym") != string::npos) {
-    graph.symmetric = true;
-  } else if (symmetric) {
-    make_symmetric(graph);
-    graph.symmetric = true;
-  } else {
-    cerr << "Please pass a symmetri graph (contains sym in the filename) or "
-            "symmetrize the graph (pass -s flag)"
-         << '\n';
-    abort();
   }
   return graph;
 }

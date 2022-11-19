@@ -34,7 +34,7 @@ Simply run
 ```
 ./FAST_BCC [filename]
 ```
-Make sure the input filename contains `sym` to indicate it is a symmetric graph.
+Make sure the input graph is a symmetric graph.
 
 Graph Formats
 --------
