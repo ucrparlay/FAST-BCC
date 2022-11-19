@@ -49,6 +49,16 @@ The application can auto-detect the format of the input graph based on the suffi
 
 Some graphs in binary format can be found in our [Google Drive](https://drive.google.com/drive/u/3/folders/1ZuhfaLmdL-EyOiWYqZGD1rOy_oSFRWe4). For storage limit, we cannot provide the largest graphs used in our paper. They can be found in the [Stanford Network Analysis Project](http://snap.stanford.edu/) and [Web Data Commons](http://webdatacommons.org/hyperlinkgraph/). 
 
+Scripts
+--------
+We also provide scripts on downloading the graphs and benchmarking FAST-BCC and Hopcroft-Tarjan. Please refer to the ```scripts/``` folder. Simply run: 
+```
+./download_dataset.sh # this script downloads the dataset info data/ 
+./run_fastbcc.sh # this script runs FAST-BCC 
+./run_hopcroft_tarjan.sh # this script runs Hopcroft-Tarjan 
+```
+The two benchmark scripts will generate two CSV files in the ```result/``` folder, which report the number of biconnected components and the running times on each graph. 
+
 Contact
 --------
 If you have any questions, please submit an issue to this repository (recommended) or send an email to the author at xdong038@ucr.edu.
