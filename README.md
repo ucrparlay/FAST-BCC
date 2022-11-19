@@ -23,7 +23,7 @@ The make command compiles the executable for both FAST-BCC and Hopcroft-Tarjan. 
 ```
 make GCC=1
 ```
-To run our code on graphs with more than $2^{31}-1$ vertices (e.g., hyperlink2012), an extra flag `N2LONG` needs to be passed in the compilation stage. That is 
+To run our code on very large graphs with more than $2^{31}-1$ vertices (e.g., hyperlink2012), some extra flag needs to be passed in the compilation stage. 
 ```
 make N2LONG=1 STDALLOC=1 
 ```
