@@ -1,10 +1,6 @@
 #pragma once
 
 #include <fcntl.h>
-#include "parlay/parallel.h"
-#include "parlay/primitives.h"
-#include "parlay/random.h"
-#include "parlay/sequence.h"
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -12,6 +8,11 @@
 
 #include <fstream>
 #include <vector>
+
+#include "parlay/parallel.h"
+#include "parlay/primitives.h"
+#include "parlay/random.h"
+#include "parlay/sequence.h"
 
 using namespace std;
 using namespace parlay;
@@ -135,7 +136,7 @@ Graph read_binary(const char* const filename, bool enable_mmap = false) {
   Graph graph;
   if (enable_mmap) {
     struct stat sb;
-    int fd = open(filename, O_RDONLY);
+    int fd = open(filename, O_RDONLY | O_DIRECT);
     if (fd == -1) {
       cerr << "Error: Cannot open file " << filename << '\n';
       abort();
@@ -168,6 +169,25 @@ Graph read_binary(const char* const filename, bool enable_mmap = false) {
       }
     }
   } else {
+    // int fd = open(filename, O_RDONLY | O_DIRECT);
+    // if (fd == -1) {
+    // cerr << "Error: Cannot open file " << filename << '\n';
+    // abort();
+    //}
+    // size_t n = 0, m = 0, sizes = 0;
+    // read(fd, &n, 1);
+    // read(fd, &m, sizeof(m));
+    // read(fd, &sizes, sizeof(sizes));
+    // graph.n = n;
+    // graph.m = m;
+    // graph.offset = sequence<EdgeId>(n + 1);
+    // graph.E = sequence<NodeId>(m);
+    // assert(sizeof(EdgeId) == sizeof(uint64_t));
+    // assert(sizeof(NodeId) == sizeof(uint32_t));
+    // read(fd, graph.offset.begin(), sizeof(EdgeId) * (n + 1));
+    // read(fd, graph.E.begin(), sizeof(NodeId) * m);
+    // close(fd);
+
     ifstream ifs(filename);
     if (!ifs.is_open()) {
       cerr << "Error: Cannot open file " << filename << '\n';
@@ -179,13 +199,14 @@ Graph read_binary(const char* const filename, bool enable_mmap = false) {
     ifs.read(reinterpret_cast<char*>(&sizes), sizeof(size_t));
     assert(sizes == (n + 1) * 8 + m * 4 + 3 * 8);
 
+    assert(sizeof(EdgeId) == sizeof(uint64_t));
+    assert(sizeof(NodeId) == sizeof(uint32_t));
     graph.n = n;
     graph.m = m;
     graph.offset = sequence<EdgeId>(n + 1);
+    ifs.read(reinterpret_cast<char*>(graph.offset.begin()),
+             sizeof(EdgeId) * (n + 1));
     graph.E = sequence<NodeId>(m);
-    assert(sizeof(EdgeId) == sizeof(uint64_t));
-    assert(sizeof(NodeId) == sizeof(uint32_t));
-    ifs.read(reinterpret_cast<char*>(graph.offset.begin()), sizeof(EdgeId) * (n + 1));
     ifs.read(reinterpret_cast<char*>(graph.E.begin()), sizeof(NodeId) * m);
     if (ifs.peek() != EOF) {
       cerr << "Error: Bad data\n";
@@ -267,8 +288,7 @@ Graph generate_synthetic_cycle(size_t n) {
   return graph;
 }
 
-Graph read_graph(char* filename, bool enable_mmap = false,
-                 bool symmetric = false) {
+Graph read_graph(char* filename, bool enable_mmap = false) {
   if (strcmp(filename, "synthetic") == 0) {
     size_t n = 3563602789, k = 63;
     return generate_synthetic_graph(n, k);
@@ -277,8 +297,6 @@ Graph read_graph(char* filename, bool enable_mmap = false,
     size_t n = 1e9;
     return generate_synthetic_cycle(n);
   }
-  // cout << "enable_mmap " << enable_mmap << endl;
-  // cout << "symmetric " << symmetric << endl;
   string str_filename = string(filename);
   size_t idx = str_filename.find_last_of('.');
   if (idx == string::npos) {
@@ -293,17 +311,6 @@ Graph read_graph(char* filename, bool enable_mmap = false,
     graph = read_binary(filename, enable_mmap);
   } else {
     cerr << "Error: Invalid graph extension\n";
-  }
-  if (str_filename.find("sym") != string::npos) {
-    graph.symmetric = true;
-  } else if (symmetric) {
-    make_symmetric(graph);
-    graph.symmetric = true;
-  } else {
-    cerr << "Please pass a symmetri graph (contains sym in the filename) or "
-            "symmetrize the graph (pass -s flag)"
-         << '\n';
-    abort();
   }
   return graph;
 }

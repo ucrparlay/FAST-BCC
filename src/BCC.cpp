@@ -15,8 +15,8 @@ int main(int argc, char* argv[]) {
   if (argc == 3) {
     NUM_ROUNDS = atoi(argv[2]);
   }
-  ofstream ofs("VL_bcc.dat", ios_base::app);
-  ofs << filename << '\t';
+  ofstream ofs("fast-bcc.csv", ios_base::app);
+  ofs << filename << ',';
   ofs.close();
   internal::timer t_g;
   Graph g = read_graph(filename);
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
   BCC solver(g);
   auto label = solver.biconnectivity();
   solver.get_num_bcc(label);
-  ofs.open("VL_bcc.dat", ios_base::app);
+  ofs.open("fast-bcc.csv", ios_base::app);
   ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
   // if (true) {
