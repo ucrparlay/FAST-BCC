@@ -60,6 +60,7 @@ We also provide scripts on downloading the graphs and benchmarking FAST-BCC and 
 ```
 ./download_dataset.sh # this script downloads the dataset info data/ 
 ./run_fastbcc.sh # this script runs FAST-BCC 
+./run_fastbcc_sequential.sh # this script runs FAST-BCC in sequential 
 ./run_hopcroft_tarjan.sh # this script runs Hopcroft-Tarjan 
 ```
 The two benchmark scripts will generate two CSV files in the ```result/``` folder, which report the number of biconnected components and the running times on each graph. 
