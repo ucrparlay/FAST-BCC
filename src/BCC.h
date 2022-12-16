@@ -238,11 +238,11 @@ struct BCC {
   auto biconnectivity() {
     internal::timer t;
     F = spanning_forest(G, beta);
-    // t.next("spanning_forest");
+    // t.next();
     euler_tour_tree();
-    // t.next("euler_tour_tree");
+    // t.next();
     compute();
-    // t.next("compute");
+    // t.next();
     auto critical = [&](NodeId u, NodeId v) {
       if (first[u] <= low[v] && last[u] >= high[v]) {
         return true;
@@ -269,8 +269,8 @@ struct BCC {
       return false;
     };
     auto label = get<0>(connect(G, beta, pred));
-    // t.next("connectivity");
     get_component_head(label);
+    // t.next();
     return label;
   }
   void get_component_head(const sequence<NodeId> &label) {
@@ -283,40 +283,6 @@ struct BCC {
         component_head[label[i]] = p;
       }
     });
-    // t.next("component_head");
-    // auto label_vertex =
-    // tabulate(n, [&](NodeId i) { return make_pair(label[i], i); });
-    // integer_sort_inplace(make_slice(label_vertex),
-    //[](pair<NodeId, NodeId> a) { return a.first; });
-    // auto sorted_label =
-    // delayed_seq<NodeId>(n, [&](NodeId i) { return label_vertex[i].first; });
-    // auto unique_label = unique(sorted_label);
-    // sequence<NodeId> component_head(n, UINT_N_MAX);
-    // sequence<NodeId> component_size(n, 0);
-    // sequence<NodeId> component_has(n, UINT_N_MAX);
-    // parallel_for(0, n, [&](size_t i) {
-    // auto [l, v] = label_vertex[i];
-    // NodeId head = component_head[l];
-    // write_add(&component_size[l], 1);
-    // component_has[l] = v;
-    // while (head == UINT_N_MAX || first[parent[v]] < first[head]) {
-    // compare_and_swap(&component_head[l], head, parent[v]);
-    // head = component_head[l];
-    //}
-    //});
-    // sequence<NodeId> times_of_head(n, 0);
-    // parallel_for(0, component_head.size(), [&](size_t i) {
-    // if (component_size[i] > 1 ||
-    //(component_size[i] == 1 && component_has[i] != component_head[i])) {
-    // write_add(&times_of_head[component_head[i]], 1);
-    //}
-    //});
-    // auto articulat_point = delayed_seq<bool>(n, [&](size_t u) {
-    // return (parent[u] == u && times_of_head[u] >= 2) ||
-    //(parent[u] != u && times_of_head[u] >= 1);
-    //});
-    // auto ret = pack_index<NodeId>(articulat_point);
-    // return ret;
   }
   auto get_articulation_point(const sequence<NodeId> &label) {
     internal::timer t;
@@ -354,11 +320,23 @@ struct BCC {
     auto cc_label = get<0>(connect(G, beta));
     auto unique_cc_label = remove_duplicates_ordered(cc_label, less<NodeId>());
     auto unique_bcc_label = remove_duplicates_ordered(label, less<NodeId>());
-    ofstream ofs("fast-bcc.csv", ios_base::app);
-    ofs << unique_cc_label.size() << ','
-        << unique_bcc_label.size() - unique_cc_label.size() << ',';
+    auto sorted_label = sort(label);
+    size_t n = sorted_label.size();
+    auto unique_index = pack_index(delayed_seq<bool>(n + 1, [&](size_t i) {
+      return i == 0 || i == n || sorted_label[i] != sorted_label[i - 1];
+    }));
+    auto largest_bcc = reduce(
+        delayed_seq<size_t>(
+            unique_index.size() - 1,
+            [&](size_t i) { return unique_index[i + 1] - unique_index[i]; }),
+        maxm<size_t>());
+    ofstream ofs("fast-bcc.tsv", ios_base::app);
+    ofs << unique_cc_label.size() << '\t'
+        << unique_bcc_label.size() - unique_cc_label.size() << '\t'
+        << largest_bcc << '\t';
     ofs.close();
     printf("#CC: %zu\n", unique_cc_label.size());
     printf("#BCC: %zu\n", unique_bcc_label.size() - unique_cc_label.size());
+    printf("Largest_BCC: %zu\n", largest_bcc);
   }
 };
