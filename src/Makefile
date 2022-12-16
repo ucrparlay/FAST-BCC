@@ -45,13 +45,16 @@ CPPFLAGS += -DPARLAY_USE_STD_ALLOC
 endif
 
 
-all: FAST_BCC hopcroft_tarjan
+all: FAST_BCC hopcroft_tarjan tarjan_vishkin
 
 FAST_BCC: BCC.h BCC.cpp spanning_forest.h connectivity.h sparse_table.h LDD.h graph.h
 	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) BCC.cpp -o FAST_BCC
 
 hopcroft_tarjan: hopcroft_tarjan.cpp hopcroft_tarjan.h graph.h
 	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) hopcroft_tarjan.cpp -o hopcroft_tarjan
+
+tarjan_vishkin: tarjan_vishkin.cpp tarjan_vishkin.h graph.h
+	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) tarjan_vishkin.cpp -o tarjan_vishkin
 
 clean:
 	rm -f FAST_BCC hopcroft_tarjan
