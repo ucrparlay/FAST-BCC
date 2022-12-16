@@ -1,13 +1,12 @@
 #pragma once
-#include "parlay/parallel.h"
-#include "parlay/random.h"
-
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
 #include "graph.h"
 #include "hash_bag.h"
+#include "parlay/parallel.h"
+#include "parlay/random.h"
 
 using namespace std;
 // NOTE: BLOCK_SIZE was set to be 1 << 13

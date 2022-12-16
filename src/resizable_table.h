@@ -118,8 +118,8 @@ class resizable_table {
 };
 
 template <class K, class KeyHash>
-inline resizable_table<K, KeyHash> make_resizable_table(
-    size_t m, K empty, KeyHash key_hash) {
+inline resizable_table<K, KeyHash> make_resizable_table(size_t m, K empty,
+                                                        KeyHash key_hash) {
   return resizable_table<K, KeyHash>(m, empty, key_hash);
 }
 

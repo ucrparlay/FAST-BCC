@@ -1,9 +1,9 @@
 #pragma once
-#include "parlay/utilities.h"
-
 #include <climits>
 #include <cstring>
 #include <iostream>
+
+#include "parlay/utilities.h"
 using namespace std;
 using namespace parlay;
 constexpr int BLOCK_SIZE = 1024;

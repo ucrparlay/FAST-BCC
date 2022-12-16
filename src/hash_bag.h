@@ -3,7 +3,6 @@
 #include "parlay/primitives.h"
 #include "parlay/sequence.h"
 #include "parlay/utilities.h"
-
 #include "utilities.h"
 using namespace std;
 using namespace parlay;
