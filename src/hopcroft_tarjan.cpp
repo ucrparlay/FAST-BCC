@@ -14,9 +14,6 @@ int main(int argc, char* argv[]) {
   if (argc == 3) {
     NUM_ROUNDS = atoi(argv[2]);
   }
-  ofstream ofs("hopcroft-tarjan.csv", ios_base::app);
-  ofs << filename << ',';
-  ofs.close();
   Graph g = read_graph(filename);
   printf("n: %zu\n", g.n);
   double total_time = 0;
@@ -26,6 +23,10 @@ int main(int argc, char* argv[]) {
       internal::timer t;
       solver.bcc();
       t.stop();
+      printf("#BCC: %u\n", solver.k);
+      std::ofstream ofs("hopcroft-tarjan.tsv", ios_base::app);
+      ofs << solver.k << '\t';
+      ofs.close();
       printf("Warmup round: %f\n", t.total_time());
     } else {
       internal::timer t;
@@ -36,11 +37,8 @@ int main(int argc, char* argv[]) {
     }
   }
   printf("Average time: %f\n", total_time / NUM_ROUNDS);
-  Tarjan solver(g);
-  solver.bcc();
-  printf("#BCC: %u\n", solver.k);
-  ofs.open("hopcroft-tarjan.csv", ios_base::app);
-  ofs << solver.k << ',' << total_time / NUM_ROUNDS << '\n';
+  std::ofstream ofs("hopcroft-tarjan.tsv", ios_base::app);
+  ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
   return 0;
 }
