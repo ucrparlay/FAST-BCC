@@ -132,7 +132,7 @@ Graph read_pbbs(const char* const filename) {
   return graph;
 }
 
-Graph read_binary(const char* const filename, bool enable_mmap = false) {
+Graph read_binary(const char* const filename, bool enable_mmap) {
   Graph graph;
   if (enable_mmap) {
     struct stat sb;
@@ -288,7 +288,7 @@ Graph generate_synthetic_cycle(size_t n) {
   return graph;
 }
 
-Graph read_graph(char* filename, bool enable_mmap = false) {
+Graph read_graph(char* filename, bool enable_mmap = true) {
   if (strcmp(filename, "synthetic") == 0) {
     size_t n = 3563602789, k = 63;
     return generate_synthetic_graph(n, k);
