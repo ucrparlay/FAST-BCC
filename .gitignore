@@ -4,6 +4,9 @@
 !*/
 !Makefile
 
+# Input files
+data/*
+
 # Debug files
 *.out
 *.log
@@ -12,6 +15,7 @@
 *.dat
 *.swp
 *.tsv
+*.bak
 
 # Prerequisites
 *.d
