@@ -38,9 +38,9 @@ declare -a undir_graph=(
 
 )
 
-declare graph_path="../data/"
+declare graph_path="/data0/graphs/links/"
 
-declare numactl="numactl -i all"
+declare numactl="taskset -c 0"
 
 declare -a undir_graph2=(
   # "hyperlink2012_sym.bin"
