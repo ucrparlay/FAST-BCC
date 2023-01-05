@@ -1,22 +1,24 @@
 #!/bin/bash
 declare -a undir_graph=(
   # Social
+  "com-youtube_sym.bin"
   "com-orkut_sym.bin"
   "soc-LiveJournal1_sym.bin"
   "twitter_sym.bin"
   "friendster_sym.bin"
 
   # Web
+  "web-Google_sym.bin"
   "sd_arc_sym.bin"
   # "clueweb_sym.bin"
   # "hyperlink2014_sym.bin"
   # "hyperlink2012_sym.bin"
 
-  #Road
+  # Road
   "RoadUSA_sym.bin"
   "Germany_sym.bin"
 
-  #KNN
+  # k-NN
   "Household.lines_5_sym.bin"
   "CHEM_5_sym.bin"
   "GeoLifeNoScale_2_sym.bin"
@@ -26,7 +28,7 @@ declare -a undir_graph=(
   "GeoLifeNoScale_20_sym.bin"
   "Cosmo50_5_sym.bin"
 
-  #Synthetic
+  # Synthetic
   "grid_10000_10000_sym.bin"
   "grid_1000_100000_sym.bin"
   "grid_10000_10000_03_sym.bin"
@@ -41,17 +43,17 @@ declare numactl="numactl -i all"
 
 cd ../src
 
-git pull
-
 echo "graph,#BCC,time" > hopcroft-tarjan.csv
 
 make hopcroft_tarjan
 ulimit -s unlimited # Avoid stack overflow
 for graph in "${undir_graph[@]}"; do
-  echo ${graph_path}${graph}
-  ${numactl} ./hopcroft_tarjan ${graph_path}${graph} 10 
+  echo Running on ${graph}
+  echo -n "${graph}," >> fast-bcc.csv
+  ${numactl} ./hopcroft_tarjan ${graph_path}${graph} 3
+  echo
 done
 
-mv hopcroft-tarjan.csv ../result/
+mv hopcroft-tarjan.csv ../results/
 
 cd ../scripts
