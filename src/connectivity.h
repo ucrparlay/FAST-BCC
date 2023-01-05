@@ -6,8 +6,10 @@
 using namespace std;
 
 struct hash_k {
-  uint32_t operator()(const pair<NodeId, NodeId> &k) {
-    return parlay::hash32(k.first) ^ parlay::hash32(k.second);
+  uint64_t operator()(const pair<NodeId, NodeId> &k) {
+    uint64_t v = k.first;
+    v = (v << 32) | (k.second);
+    return parlay::hash64(v);
   }
 };
 
@@ -56,28 +58,26 @@ tuple<sequence<NodeId>, sequence<pair<NodeId, NodeId>>> connect(
     table = gbbs::resizable_table<pair<NodeId, NodeId>, hash_k>(
         G.n, {UINT_N_MAX, UINT_N_MAX}, hash_k());
   }
-  parallel_for(
-      0, G.n,
-      [&](NodeId i) {
-        if (find(label[i], label) != find(max_label, label)) {
-          parallel_for(
-              G.offset[i], G.offset[i + 1],
-              [&](size_t j) {
-                NodeId v = G.E[j];
-                if (pred(i, v)) {
-                  if (unite(i, v, label) != UINT_N_MAX) {
-                    if (spanning_forest) {
-                      table.insert({i, v});
-                    }
-                  }
+  parallel_for(0, G.n, [&](NodeId i) {
+    if (find(label[i], label) != find(max_label, label)) {
+      parallel_for(
+          G.offset[i], G.offset[i + 1],
+          [&](size_t j) {
+            NodeId v = G.E[j];
+            if (pred(i, v)) {
+              if (unite(i, v, label) != UINT_N_MAX) {
+                if (spanning_forest) {
+                  table.insert({i, v});
                 }
-              },
-              BLOCK_SIZE);
-        }
-      },
-      BLOCK_SIZE);
+              }
+            }
+          },
+          BLOCK_SIZE);
+    }
+  });
 
   parallel_for(0, G.n, [&](size_t i) { label[i] = find(label[i], label); });
+
   sequence<pair<NodeId, NodeId>> tree_edges;
   if (spanning_forest) {
     // TODO: Use filter

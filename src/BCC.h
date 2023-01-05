@@ -330,10 +330,10 @@ struct BCC {
             unique_index.size() - 1,
             [&](size_t i) { return unique_index[i + 1] - unique_index[i]; }),
         maxm<size_t>());
-    ofstream ofs("fast-bcc.tsv", ios_base::app);
-    ofs << unique_cc_label.size() << '\t'
-        << unique_bcc_label.size() - unique_cc_label.size() << '\t'
-        << largest_bcc << '\t';
+    ofstream ofs("fast-bcc.csv", ios_base::app);
+    ofs << unique_cc_label.size() << ','
+        << unique_bcc_label.size() - unique_cc_label.size() << ','
+        << largest_bcc << ',';
     ofs.close();
     printf("#CC: %zu\n", unique_cc_label.size());
     printf("#BCC: %zu\n", unique_bcc_label.size() - unique_cc_label.size());
