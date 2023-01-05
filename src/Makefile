@@ -14,10 +14,10 @@ ifdef N2LONG
 INTN2 = -DN2LONG
 endif
 
-ifdef GCC
-CC = g++
-else
+ifdef CLANG
 CC = clang++
+else
+CC = g++
 endif
 
 CPPFLAGS = -std=c++17 -Wall -Wextra -Werror $(INTN) $(INTE) $(INTN2)
@@ -57,4 +57,4 @@ tarjan_vishkin: tarjan_vishkin.cpp tarjan_vishkin.h graph.h
 	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) tarjan_vishkin.cpp -o tarjan_vishkin
 
 clean:
-	rm -f FAST_BCC hopcroft_tarjan
+	rm FAST_BCC hopcroft_tarjan
