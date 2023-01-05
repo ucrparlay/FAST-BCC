@@ -15,6 +15,7 @@ data/*
 *.dat
 *.swp
 *.tsv
+*.csv
 *.bak
 
 # Prerequisites
