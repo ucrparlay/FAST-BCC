@@ -55,6 +55,7 @@ struct Graph {
   bool symmetric;
   sequence<EdgeId> offset;
   sequence<NodeId> E;
+  Graph() : n(0), m(0), symmetric(false) {}
 };
 
 // For spanning forest
