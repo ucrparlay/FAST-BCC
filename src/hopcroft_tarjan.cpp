@@ -15,7 +15,6 @@ int main(int argc, char* argv[]) {
     NUM_ROUNDS = atoi(argv[2]);
   }
   Graph g = read_graph(filename);
-  printf("n: %zu\n", g.n);
   double total_time = 0;
   for (int i = 0; i <= NUM_ROUNDS; i++) {
     Tarjan solver(g);
