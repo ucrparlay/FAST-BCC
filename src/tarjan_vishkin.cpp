@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   auto label = solver.biconnectivity();
   solver.get_num_bcc(label);
   printf("Average time: %f\n", total_time / NUM_ROUNDS);
-  std::ofstream ofs("tarjan-vishkin.tsv", ios_base::app);
+  std::ofstream ofs("tarjan-vishkin.csv", ios_base::app);
   ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
   return 0;

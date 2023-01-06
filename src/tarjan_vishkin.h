@@ -79,8 +79,7 @@ struct Tarjan_Vishkin : public BCC {
     Graph GA;
     GA.n = edgelist.size();
     GA.m = sym_edges.size();
-    printf("GA.n: %zu, GA.m: %zu\n", GA.n, GA.m);
-    std::ofstream ofs("tarjan-vishkin.tsv", ios_base::app);
+    std::ofstream ofs("tarjan-vishkin.csv", ios_base::app);
     ofs << GA.n << '\t' << GA.m << '\t';
     ofs.close();
     GA.offset = sequence<EdgeId>(GA.n + 1);

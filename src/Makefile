@@ -57,4 +57,4 @@ tarjan_vishkin: tarjan_vishkin.cpp tarjan_vishkin.h graph.h
 	$(CC) $(CPPFLAGS) $(INCLUDE_PATH) tarjan_vishkin.cpp -o tarjan_vishkin
 
 clean:
-	rm FAST_BCC hopcroft_tarjan
+	rm FAST_BCC hopcroft_tarjan tarjan_vishkin
