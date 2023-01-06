@@ -79,9 +79,6 @@ struct Tarjan_Vishkin : public BCC {
     Graph GA;
     GA.n = edgelist.size();
     GA.m = sym_edges.size();
-    std::ofstream ofs("tarjan-vishkin.csv", ios_base::app);
-    ofs << GA.n << '\t' << GA.m << '\t';
-    ofs.close();
     GA.offset = sequence<EdgeId>(GA.n + 1);
     GA.E = sequence<NodeId>(GA.m);
     parallel_for(0, GA.n + 1, [&](size_t i) { GA.offset[i] = 0; });
@@ -103,7 +100,7 @@ struct Tarjan_Vishkin : public BCC {
   void get_num_bcc(const sequence<NodeId> &label) {
     size_t num_bcc = remove_duplicates_ordered(label).size();
     printf("#BCC: %zu\n", num_bcc);
-    std::ofstream ofs("tarjan-vishkin.tsv", ios_base::app);
+    std::ofstream ofs("tarjan-vishkin.csv", ios_base::app);
     ofs << num_bcc << '\t';
     ofs.close();
   }

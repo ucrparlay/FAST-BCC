@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
       solver.bcc();
       t.stop();
       printf("#BCC: %u\n", solver.k);
-      std::ofstream ofs("hopcroft-tarjan.tsv", ios_base::app);
+      std::ofstream ofs("hopcroft-tarjan.csv", ios_base::app);
       ofs << solver.k << '\t';
       ofs.close();
       printf("Warmup round: %f\n", t.total_time());
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     }
   }
   printf("Average time: %f\n", total_time / NUM_ROUNDS);
-  std::ofstream ofs("hopcroft-tarjan.tsv", ios_base::app);
+  std::ofstream ofs("hopcroft-tarjan.csv", ios_base::app);
   ofs << total_time / NUM_ROUNDS << '\n';
   ofs.close();
   return 0;
