@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
       t.stop();
       printf("#BCC: %u\n", solver.k);
       std::ofstream ofs("hopcroft-tarjan.csv", ios_base::app);
-      ofs << solver.k << '\t';
+      ofs << solver.k << ',';
       ofs.close();
       printf("Warmup round: %f\n", t.total_time());
     } else {
