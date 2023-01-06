@@ -101,7 +101,7 @@ struct Tarjan_Vishkin : public BCC {
     size_t num_bcc = remove_duplicates_ordered(label).size();
     printf("#BCC: %zu\n", num_bcc);
     std::ofstream ofs("tarjan-vishkin.csv", ios_base::app);
-    ofs << num_bcc << '\t';
+    ofs << num_bcc << ',';
     ofs.close();
   }
 };
