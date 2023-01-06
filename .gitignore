@@ -12,6 +12,7 @@ data/*
 *.log
 *.data
 *.sh
+!scripts/*.sh
 *.dat
 *.swp
 *.tsv
