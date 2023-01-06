@@ -48,7 +48,7 @@ declare -a undir_graph2=(
 
 cd ../src
 
-echo "graph,#CC,#BCC,time" > fast-bcc.csv
+echo "graph,#CC,#BCC,Largest_BCC,time" > fast-bcc.csv
 
 rm FAST_BCC
 make FAST_BCC

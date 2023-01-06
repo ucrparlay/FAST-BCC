@@ -45,11 +45,12 @@ cd ../src
 
 echo "graph,#BCC,time" > hopcroft-tarjan.csv
 
-make hopcroft_tarjan
+rm hopcroft_tarjan
+make hopcroft_tarjan SERIAL=1
 ulimit -s unlimited # Avoid stack overflow
 for graph in "${undir_graph[@]}"; do
   echo Running on ${graph}
-  echo -n "${graph}," >> fast-bcc.csv
+  echo -n "${graph}," >> hopcroft-tarjan.csv
   ${numactl} ./hopcroft_tarjan ${graph_path}${graph} 3
   echo
 done
