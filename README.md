@@ -58,7 +58,7 @@ Scripts
 --------
 We also provide scripts on downloading the graphs and benchmarking FAST-BCC and Hopcroft-Tarjan. Please refer to the ```scripts/``` folder. Simply run: 
 ```
-./download_dataset.sh # this script downloads the dataset info data/ 
+./download_dataset.sh # this script downloads the dataset into data/ 
 ./run_fastbcc.sh # this script runs FAST-BCC 
 ./run_fastbcc_sequential.sh # this script runs FAST-BCC in sequential 
 ./run_hopcroft_tarjan.sh # this script runs Hopcroft-Tarjan 
