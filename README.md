@@ -71,8 +71,9 @@ If you have any questions, please submit an issue to this repository (recommende
 
 Reference
 --------
-Xiaojun Dong, Letong Wang, Yan Gu, Yihan Sun. [*Provably Fast and Space-Efficient Parallel Biconnectivity*](
-https://doi.org/10.1145/3572848.3577483). ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming (PPoPP), pp. 52-65, 2023.  
+Xiaojun Dong, Letong Wang, Yan Gu, Yihan Sun. [Provably Fast and Space-Efficient Parallel Biconnectivity](https://doi.org/10.1145/3572848.3577483). In *ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming (PPoPP)*, pp. 52-65, 2023.  
+
+Xiaojun Dong, Letong Wang, Yan Gu, Yihan Sun. [Provably Fast and Space-Efficient Parallel Biconnectivity](https://arxiv.org/abs/2301.01356). *arXiv preprint: 2301.01356*, 2023.  
 
 If you use our code, please cite our paper:
 ```
